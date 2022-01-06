@@ -46,7 +46,7 @@
   - [Garbage Collection](#garbage-collection)
   - [Math](#math)
   - [String](#string)
-  - [Template Literals](#template-literals)
+  - [Template Literals](#template-literals-es6-new-feature)
   - [Date](#date)
 - [Arrays](#arrays)
   - [Basics](#basics)
@@ -411,7 +411,7 @@ whereas `For of` for element in an array
 
 ## Objects
 
-**Objects** are key-value pairs
+**Objects** are collections of key-value pairs
 
 Note: If you are familiar with other programming languages, JavaScript objects are a bit different. You do not need to create classes in order to create objects.
 
@@ -421,6 +421,27 @@ The syntax to declare an object is:
 const object_name = {
   key1: value1,
   key2: value2,
+};
+```
+
+For example, an object can be:
+
+```js
+const circle = {
+  // int
+  radius: 1,
+  // another object
+  location: {
+    x: 1,
+    y: 1,
+  },
+  // boolean
+  isVisible: true,
+
+  // function
+  draw: function () {
+    console.log("draw");
+  },
 };
 ```
 
@@ -441,6 +462,9 @@ function createCircle(radius) {
 
 // create factory function
 const myCircle = createCircle(1);
+
+myCircle.draw(); // access method
+myCircle.radius; // access property
 ```
 
 ---
@@ -458,6 +482,9 @@ function Circle(radius) {
 
 // create constructor function
 const circle = new Circle(1);
+
+myCircle.draw(); // access method
+myCircle.radius; // access property
 ```
 
 ---
@@ -484,41 +511,237 @@ console.log(circle);
 
 ### Constructor Property
 
+Every `Object` in JS has a `constructor` property, that is used to create this `Object`
+
+Ex:
+
+```js
+let x = "";
+
+// under the hood, x is using String() constructor
+x = new String();
+```
+
 ---
 
 ### Functions are Objects
+
+Every `function` in JS is an `Object`
+
+```js
+function Circle(radius) {
+  this.radius = radius;
+  this.draw = function () {
+    console.log("draw");
+  };
+}
+
+Circle.call({}, 1);
+
+const another = new Circle(1);
+```
 
 ---
 
 ### Values vs Reference Types
 
+**Primitives** are copied by their _value_
+
+**Objects** are copied by their _reference_
+
+Pass by values:
+
+```js
+let num = 10;
+
+function increase(number) {
+  number++;
+}
+
+increase(num);
+console.log(num); // num = 10
+```
+
+Pass by reference:
+
+```js
+let number = { value: 10 };
+function increase2(number) {
+  number.value++;
+}
+
+increase2(number);
+console.log(number); // number = {value: 11}
+```
+
 ---
 
 ### Enumerating Properties of an Object
+
+- use `for (let key in circle)`
+- use `for (let key of Object.keys(circle))` (since `for..of` are used in array)
+- use `for (let entry of Object.entries(circle))` (collect all key-value pair in an array)
+
+```js
+const circle = {
+  radius: 1,
+  draw() {
+    console.log("draw");
+  },
+};
+
+for (let key in circle) {
+  console.log(key, circle[key]);
+}
+
+// output: radius 1; draw [Function: draw]
+
+for (let key of Object.keys(circle)) {
+  console.log(key);
+}
+
+// output: radius draw
+
+for (let entry of Object.entries(circle)) {
+  console.log(entry);
+}
+
+// output: [ 'radius', 1 ]; [ 'draw', [Function: draw] ]
+
+if ("color" in circle) console.log("yes");
+```
 
 ---
 
 ### Cloning an Object
 
+To copy an Object:
+
+```js
+// classic way
+const another = {};
+for (let key in circle) another[key] = circle[key];
+
+// Object assign method. (add additional properties in {})
+const another = Object.assign({}, circle);
+
+// spread operator method.
+const another = { ...circle };
+
+console.log(another);
+```
+
 ---
 
 ### Garbage Collection
+
+In JS, we don't need explicitly `deallocate` memory when we finish using an array. (Not like in `C`, but like in `Python`)
+
+This is called JS **Garbage Collection**
 
 ---
 
 ### Math
 
+[JS Math](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)
+
+Some important methods:
+
+```js
+Math.random(); // random number between 0-1
+
+// Getting a random number between two values
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+Math.round(1.9); // 2
+
+Math.max(1, 2, 3, 4, 5); // 5
+```
+
 ---
 
 ### String
 
+[JS String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+`String` is Primitive Type yet it can be wrapped to `Object`
+
+```js
+// String primitive type (type: string)
+const message = "hi";
+
+// String of Object (type: object)
+const message2 = new String("hi");
+```
+
+`String` has methods:
+
+Some important methods:
+
+```js
+const message = "hello, world";
+
+// locate single char
+message[0];
+
+message.includes("h");
+
+message.startsWith("hello");
+
+message.endsWith("orld");
+
+message.indexOf(",");
+
+message.replace("hello", "hi");
+
+message.toLowerCase();
+
+// get rid of all spaces before/after message
+message.trim();
+
+message.trimLeft();
+
+message.split(" ");
+```
+
 ---
 
-### Template Literals
+### Template Literals (ES6 New Feature)
+
+Template Literals allow us to write paragraphs without using `\n` to seperate lines, much cleaner and easier.
+
+`${...}` allow us to add code/variable, like _f-string_ in Python
+
+```js
+let name = "Paul";
+
+const string = `Hi ${name} ${2 + 3}, 
+
+Thanks for joining my mailing list.
+
+Regards,
+Ben`;
+
+console.log(string);
+```
 
 ---
 
 ### Date
+
+```js
+const now = new Date(); // get current time
+const date1 = new Date("May 11 2020 09:00");
+const date2 = new Date(2020, 4, 11, 9); // YYYY, MM-1, DD, Hr, Min
+
+now.toDateString(); //'Thu Jan 06 2022'
+
+now.toTimeString(); // '13:19:52 GMT-0800 (Pacific Standard Time)'
+
+now.toISOString(); // '2022-01-06T21:19:52.613Z'
+```
 
 ---
 
