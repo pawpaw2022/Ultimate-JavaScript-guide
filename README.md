@@ -12,9 +12,9 @@
   - [Constants](#constants)
   - [Primitive Types-Title](#primitive-types-title)
   - [Dynamic Typing](#dynamic-typing)
-  - [Object](#object)
-  - [Arrays](#arrays)
-  - [Functions](#functions)
+  - [Objects](#1objects)
+  - [Arrays](#1arrays)
+  - [Functions](#1functions)
 - [Operators](#operators)
   - [Arithmetic Operators](#arithmetic-op)
   - [Assignment Operators](#assignment-op)
@@ -35,10 +35,19 @@
   - [For...of](#for...of)
   - [Break and Continue](#break-and-continue)
 - [Objects](#objects)
-  - [Basics](#basics)
-  - [Basics](#basics)
-  - [Basics](#basics)
-  - [Basics](#basics)
+  - [Factory Functions](#factory-functions)
+  - [Constructor Functions](#constructor-functions)
+  - [Dynamic Nature of Objects](#dynamic-nature-of-objects)
+  - [Constructor Property](#constructor-property)
+  - [Functions are Objects](#functions-are-objects)
+  - [Values vs Reference Types](#values-vs-reference-types)
+  - [Enumerating Properties of an Object](#enumerating-properties-of-an-object)
+  - [Cloning an Object](#cloning-an-object)
+  - [Garbage Collection](#garbage-collection)
+  - [Math](#math)
+  - [String](#string)
+  - [Template Literals](#template-literals)
+  - [Date](#date)
 - [Arrays](#arrays)
   - [Basics](#basics)
 - [Functions](#functions)
@@ -133,7 +142,7 @@ Output:
 
 ---
 
-### Object
+<h3 id="1objects">Objects</h3>
 
 Reference Types
 
@@ -162,7 +171,7 @@ person["name"] = "Mary";
 
 ---
 
-### Arrays
+<h3 id="1arrays">Arrays</h3>
 
 ```js
 let selectedColors = ["red", "blue"];
@@ -171,7 +180,7 @@ console.log(selectedColors[0]);
 
 ---
 
-### Functions
+<h3 id="1functions">Functions</h3>
 
 ```js
 let name = "Paul";
@@ -473,4 +482,52 @@ console.log(circle);
 
 ---
 
-###
+### Constructor Property
+
+---
+
+### Functions are Objects
+
+---
+
+### Values vs Reference Types
+
+---
+
+### Enumerating Properties of an Object
+
+---
+
+### Cloning an Object
+
+---
+
+### Garbage Collection
+
+---
+
+### Math
+
+---
+
+### String
+
+---
+
+### Template Literals
+
+---
+
+### Date
+
+---
+
+## Arrays
+
+---
+
+### String
+
+---
+
+### String
