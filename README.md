@@ -49,10 +49,33 @@
   - [Template Literals](#template-literals-es6-new-feature)
   - [Date](#date)
 - [Arrays](#arrays)
-  - [Basics](#basics)
+  - [Adding Elements](#adding-elements)
+  - [Finding Elements(Primitives)](#finding-elements-primitives)
+  - [Finding Elements(Reference Types)](#finding-elements-reference-types)
+  - [Arrow Functions](#arrow-functions)
+  - [Removing Elements](#removing-elements)
+  - [Emptying an Array](#emptying-an-array)
+  - [Combining and Slicing Arrays](#combining-and-slicing-arrays)
+  - [The spread operator](#the-spread-operator)
+  - [Iterating an Array](#iterating-an-array)
+  - [Joining Arrays](#joining-arrays)
+  - [Sorting Arrays](#sorting-arrays)
+  - [Testing the Elements of an Array](#testing-the-elements-of-an-array)
+  - [Filtering an Array](#filtering-an-array)
+  - [Mapping an Array](#mapping-an-array)
+  - [Reducing an Array](#reducing-an-array)
 - [Functions](#functions)
-  - [Basics](#basics)
-  - [Basics](#basics)
+  - [Function Declarations vs Expressions](#function-declarations-vs-expressions)
+  - [Hoisting](#hoisting)
+  - [Arguments](#arguments)
+  - [The Rest Operator](#the-rest-operator)
+  - [Default Parameters](#default-parameters)
+  - [Getters and Setters](#getters-and-setters)
+  - [Try and Catch](#try-and-catch)
+  - [Local vs Global Scope](#local-vs-global-scope)
+  - [Let vs Var](#let-vs-var)
+  - [The this Keyword](#the-this-keyword)
+  - [Changing this](#changing-this)
 
 ---
 
@@ -749,8 +772,340 @@ now.toISOString(); // '2022-01-06T21:19:52.613Z'
 
 ---
 
-### String
+### Adding Elements
+
+```js
+const number = [3, 4];
+
+// End
+number.push(5, 6); // number = [3,4,5,6]
+
+// Beginning
+number.unshift(1, 2); // number = [1,2,3,4,5,6]
+
+// Middle
+// starting index, delete count, numbers to insert
+number.splice(2, 0, "a", "b"); // number = [1,2,'a','b',3,4,5,6]
+```
 
 ---
 
-### String
+### Finding Elements(Primitives)
+
+```js
+const number = [1, 2, 3, 1, 4];
+
+console.log(number.indexOf(1)); // return 0
+
+console.log(number.lastIndexOf(1)); // return 3
+
+console.log(number.includes(1)); // true
+```
+
+---
+
+### Finding Elements(Reference Types)
+
+The `find()` method returns the value of the first element in the provided array that satisfies the provided testing function. If no values satisfy the testing function, `undefined` is returned.
+[Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
+
+```js
+const courses = [
+  { id: 1, name: "a" },
+  { id: 2, name: "b" },
+];
+
+// return false bc reference isn't the same
+console.log(courses.includes({ id: 1, name: "a" }));
+
+// find() returns the value of the first element in the array
+// that satifies the testing function
+const course = courses.find(function (element) {
+  return element.name === "a";
+});
+
+console.log(course);
+```
+
+---
+
+### Arrow Functions
+
+In ES6, we can use Arrow Function to simplify code
+
+```js
+const courses = [
+  { id: 1, name: "a" },
+  { id: 2, name: "b" },
+];
+
+// Not using Arrow function:
+const course = courses.find(function (element) {
+  return element.name === "a";
+});
+
+// Using Arrow Function:
+const course = courses.find((element) => element.name === "a");
+```
+
+---
+
+### Removing Elements
+
+```js
+const numbers = [1, 2, 3, 4];
+
+//end
+const last = numbers.pop(); // numbers = [1,2,3], last = 4
+
+// beginning
+const first = numbers.shift(); // numbers = [2,3], first = 1;
+
+// middle
+numbers.splice(2, 2); // starting at index 2, removing 2 elements.
+```
+
+---
+
+### Emptying an Array
+
+```js
+const numbers = [1, 2, 3, 4];
+
+// Solution 1
+numbers = [];
+
+// Solution 2
+numbers.length = 0; // array get truncated
+```
+
+---
+
+### Combining and Slicing Arrays
+
+```js
+const first = [1, 2, 3];
+const second = [4, 5, 6];
+
+const combined = first.concat(second); // combined = [1,2,3,4,5,6]
+
+// subarray from index 2 (included) to index 4 (excluded)
+const slice = combined.slice(2, 4); // slice = [3,4]
+
+const slice = combined.slice(2); // slice = [3,4,5,6]
+
+const slice = combined.slice(); // slice = combined (copy)
+```
+
+==Note: `concat()` and `slice()` copy values if it is _primitive type_, copy reference if it is _reference type_==
+
+---
+
+### The spread operator
+
+`spread operator`, i.e. `...` allows us to quickly copy an array
+
+```js
+const first = [1, 2, 3];
+const second = [4, 5, 6];
+
+const combined = first.concat(second); // combined = [1,2,3,4,5,6]
+
+// using spread operator
+const combined = [...first, "a", ...second, "b"]; // combined = [1,2,3,'a',4,5,6,'b']
+
+const copy = [...combined];
+```
+
+---
+
+### Iterating an Array
+
+Iterate an array, we use `for`...`of`, or `forEach`
+
+```js
+const numbers = [1, 2, 3, 4];
+
+// for...of, loop the element in the array
+for (let number of numbers) {
+  console.log(number);
+}
+
+// for in, loop the index in the array
+for (let index in numbers) {
+  console.log(index);
+}
+
+// forEach
+numbers.forEach((number) => console.log(number));
+
+numbers.forEach((index, number) => console.log(index, number));
+```
+
+---
+
+### Joining Arrays
+
+```js
+const numbers = [1, 2, 3, 4];
+
+const joined = numbers.join(); // return a string "1,2,3,4"
+console.log(joined);
+
+const message = "This is a msg";
+const parts = message.split(" ");
+console.log(parts);
+
+const combined = parts.join("-");
+console.log(combined);
+```
+
+---
+
+### Sorting Arrays
+
+Sort Numbers:
+
+```js
+const numbers = [3, 2, 1, 4];
+numbers.sort(); // [1,2,3,4]
+
+numbers.reverse(); // [4,3,2,1]
+```
+
+Sort Objects:
+
+```js
+const courses = [
+  { id: 1, name: "Node.js" },
+  { id: 2, name: "JavaScript" },
+];
+
+// sort by name
+courses.sort(function (a, b) {
+  if (a.name < b.name) return -1;
+  if (a.name > b.name) return 1;
+  return 0;
+});
+
+console.log(courses);
+```
+
+---
+
+### Testing the Elements of an Array
+
+```js
+const numbers = [1, 2, 3, 4, -1];
+
+// every()
+// return true if all element satisfy the critiera
+const allPositive = numbers.every((value) => value >= 0);
+console.log(allPositive);
+
+// some()
+// return true if at least one element satisfy the critiera
+const atLeastOnePositive = numbers.some((value) => value >= 0);
+console.log(atLeastOnePositive);
+```
+
+---
+
+### Filtering an Array
+
+```js
+const numbers = [1, 2, 3, 4, -1];
+
+const filtered = numbers.filter((n) => n >= 0); // [1,2,3,4]
+```
+
+---
+
+### Mapping an Array
+
+```js
+const numbers = [1, -1, 2, 3];
+
+const filtered = numbers.filter((n) => n >= 0); // [1,2,3,4]
+
+// add () outside {}, so js doesn't get confused
+const items = filtered.map((n) => ({ value: n }));
+
+console.log(items);
+```
+
+Nested `filter()` and `map()`chain:
+
+```js
+const numbers = [1, -1, 2, 3];
+
+const filtered = numbers
+    .filter((n) => n >= 0)
+    .map(n => ({ value: n })))
+    .filter(obj => obj.value > 1)
+    .map(obj => obj.value);
+
+console.log(items); // [2,3]
+```
+
+---
+
+### Reducing an Array
+
+```js
+const numbers = [1, -1, 2, 3];
+
+const sum = numbers.reduce((accumulator, currentValue) => {
+  return accumulator + currentValue;
+});
+
+console.log(sum);
+```
+
+---
+
+## Functions
+
+---
+
+### Function Declarations vs Expressions
+
+---
+
+### Hoisting
+
+---
+
+### Arguments
+
+---
+
+### The Rest Operator
+
+---
+
+### Default Parameters
+
+---
+
+### Getters and Setters
+
+---
+
+### Try and Catch
+
+---
+
+### Local vs Global Scope
+
+---
+
+### Let vs Var
+
+---
+
+### The this Keyword
+
+---
+
+### Changing this
