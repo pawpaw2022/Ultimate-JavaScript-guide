@@ -1062,6 +1062,31 @@ const sum = numbers.reduce((accumulator, currentValue) => {
 console.log(sum);
 ```
 
+Ex: Count the occurance of a given element in the array:
+
+```js
+const numbers = [1, 2, 3, 4];
+
+const count = countOccurrences(numbers, 1);
+
+console.log(count);
+
+function countOccurrences(array, searchE) {
+  // let count = 0;
+  // for(let element of array){
+  //     if(element === searchE){
+  //         count++;
+  //     }
+  // }
+  // return count;
+
+  return numbers.reduce((accumulator, current) => {
+    const occurrence = current === searchE ? 1 : 0;
+    return accumulator + occurrence;
+  }, 0);
+}
+```
+
 ---
 
 ## Functions
@@ -1070,37 +1095,154 @@ console.log(sum);
 
 ### Function Declarations vs Expressions
 
+In JavaScript, function can be decleared by `function()` or a variable that contains a function.
+
+```js
+// Function Declaration
+function walk() {
+  console.log("walk");
+}
+
+// Function Expression
+const run = function () {
+  console.log("run");
+};
+```
+
 ---
 
 ### Hoisting
+
+In JavaScript, Hoisting is the default behavior of moving all the declarations at the top of the scope before code execution.
+
+```js
+// Function Declaration
+walk(); // can be called before function()
+
+function walk() {
+  console.log("walk");
+}
+
+// Function Expression
+const run = function () {
+  console.log("run");
+};
+
+run(); // have to call after run is created.
+```
 
 ---
 
 ### Arguments
 
+All arguments that passed in a function will be stored in `arguments`
+
+```js
+function sum() {
+  let total = 0;
+  for (let value of arguments) total += value;
+  return total;
+}
+```
+
 ---
 
 ### The Rest Operator
+
+The Rest Operator, i.e. `...`, allows us to collect all remaining parameters.
+
+```js
+function sum(discount, ...prices) {
+  const total = prices.reduce((a, b) => a + b);
+  return total * (1 - discount);
+}
+
+console.log(sum(0.1, 20, 30, 1));
+```
+
+==Note: `...` has to appear to be the last argument==
 
 ---
 
 ### Default Parameters
 
+Default Parameters must be shown at the end.
+
+```js
+function interest(principal, years, rate = 3.5) {
+  return ((principal * rate) / 100) * years;
+}
+
+console.log(interest(10000, 5));
+```
+
 ---
 
 ### Getters and Setters
+
+```js
+const person = {
+  firstName: "Paul",
+  lastName: "Lu",
+  get fullName() {
+    return `${person.firstName} ${person.lastName}`;
+  },
+  set fullName(value) {
+    const parts = value.split("");
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  },
+};
+
+person.fullName = "John Smith";
+
+console.log(person);
+```
 
 ---
 
 ### Try and Catch
 
+```js
+const person = {
+  firstName: "Paul",
+  lastName: "Lu",
+  get fullName() {
+    return `${person.firstName} ${person.lastName}`;
+  },
+  set fullName(value) {
+    if (typeof value !== "string") throw new Error("Value is not a string.");
+
+    const parts = value.split("");
+    if (parts.length !== 2) throw new Error("Enter a first and last name");
+
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  },
+};
+
+try {
+  person.fullName = "John Smith";
+} catch (e) {
+  alert(e);
+}
+console.log(person);
+```
+
 ---
 
 ### Local vs Global Scope
 
+We should avoid using Global Scope, instead, we should use more local scope.
+
 ---
 
 ### Let vs Var
+
+`var` => function-scoped
+`let`, `const` (ES6, ES2015) => block-scoped
+
+We should avoid using `var`.
 
 ---
 
